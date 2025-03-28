@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -23,6 +22,8 @@ import com.app.exception.OrderException;
 import com.app.model.Operation;
 import com.app.model.Order;
 import com.app.repo.OrderRepo;
+import com.app.request.AllowanceRequest;
+import com.app.request.LaneRequest;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -144,9 +145,9 @@ public class OrderService {
 	    order.setTotalRequired(roundToTwo(totalRequired));
 
 	    if (totalAllocation > 0) {
-	        order.setLineDesign(roundToTwo((order.getDesignOutput() * totalSam) / (totalAllocation * 480) * 100.0));
+	        order.setLineDesign((int)Math.round((order.getDesignOutput() * totalSam) / (totalAllocation * 480) * 100.0));
 	    } else {
-	        order.setLineDesign((double)0);
+	        order.setLineDesign(0);
 	    }
 
 	    order.setOperations(operations);
@@ -156,6 +157,28 @@ public class OrderService {
 	// **Utility function for rounding to 2 decimal places**
 	private double roundToTwo(double value) {
 	    return BigDecimal.valueOf(value).setScale(2, RoundingMode.HALF_UP).doubleValue();
+	}
+
+	public String updateAllowance(AllowanceRequest allowance) throws OrderException {
+		Order order = getOrderByStyleNo(allowance.getStyleNo());
+		order.setAllowance(allowance.getAllowance());
+		orderRepo.save(order);
+		return "Allowance set to "+allowance.getAllowance() +"%";
+	}
+
+	public String updateLane(LaneRequest lane) throws OrderException {
+		Order order = getOrderByStyleNo(lane.getStyleNo());
+		order.setLane(lane.getLane());
+		orderRepo.save(order);
+		return "Lane set to Lane no, :"+lane.getLane();
+	}
+	
+	public Integer getAllowance(String styleNo) throws OrderException {
+		return getOrderByStyleNo(styleNo).getAllowance();
+	}
+	
+	public Integer getLane(String styleNo) throws OrderException {
+		return getOrderByStyleNo(styleNo).getLane();
 	}
 
 

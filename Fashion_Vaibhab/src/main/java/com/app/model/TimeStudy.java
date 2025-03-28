@@ -17,17 +17,21 @@ public class TimeStudy {
 
 	@Id
 	private String id;
-	private String OperatorName;
-	private String OperatorId;
-	private String OperationName;
+	private String styleNo;
+	private String operatorName;
+	private String operatorId;
+	private String operationName;
 	private String section;
 	private String machineType;
-	private String folder; //ask him
 	private List<String> laps; // mm:ss:SSS format
 	private List<Long> lapsMS; // Received in request (milliseconds)
 	private String avgTime; // Average time in mm:ss:SSS
 	private Integer capacityPH; // Production Per Hour
 	private Integer capacityPD;
-	private Double allowanceTime;
+	private String allowanceTime;
 	private String remarks;
+	private Double assigned; // 0.5 or 1
 }
+
+
+// lap count and allowance change

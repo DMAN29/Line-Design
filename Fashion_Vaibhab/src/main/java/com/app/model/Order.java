@@ -26,7 +26,7 @@ public class Order {
 	private String buyer;
 	private Long orderQuantity;
 	private Long target; // 1000
-	private Double lineDesign;
+	private Integer lineDesign;
 	private Double efficiency; // 80
 	private Long designOutput;// 800
 	private Double totalSam;
@@ -35,5 +35,7 @@ public class Order {
 	private List<Operation> operations;
 	private LocalDateTime createdAt;
 	private LocalDateTime deadLine;
+	private Integer allowance = 0;
+	private Integer lane=0;
 	
 }

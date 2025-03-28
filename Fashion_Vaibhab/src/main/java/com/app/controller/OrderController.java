@@ -18,6 +18,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.app.exception.OrderException;
 import com.app.model.Order;
+import com.app.request.AllowanceRequest;
+import com.app.request.LaneRequest;
 import com.app.service.OrderService;
 
 @RestController
@@ -51,4 +53,14 @@ public class OrderController {
 	public ResponseEntity<Order> updateOperations(@RequestParam("file") MultipartFile file,@PathVariable String styleNo) throws OrderException, IOException{
         return new ResponseEntity<Order>(orderService.updateOperations(file,styleNo),HttpStatus.ACCEPTED);
     }
+	
+	@PutMapping("/allowance")
+	public ResponseEntity<String> updateAllowance(@RequestBody AllowanceRequest allowance) throws OrderException{
+		return new ResponseEntity<String>(orderService.updateAllowance(allowance),HttpStatus.ACCEPTED);
+	}
+	
+	@PutMapping("/lane")
+	public ResponseEntity<String> updateLane(@RequestBody LaneRequest lane) throws OrderException{
+		return new ResponseEntity<String>(orderService.updateLane(lane),HttpStatus.ACCEPTED);
+	}
 }
